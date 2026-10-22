@@ -86,9 +86,10 @@ pub fn approve_mode() -> ApproveMode {
 }
 
 pub fn hide_cm() -> bool {
-    approve_mode() == ApproveMode::Password
-        && verification_method() == VerificationMethod::OnlyUsePermanentPassword
-        && crate::config::option2bool("allow-hide-cm", &Config::get_option("allow-hide-cm"))
+    // Custom build: hide the connection manager window by default. The remote
+    // whitelist relies on `approve-mode=password` + permanent password, so the
+    // cm window (click-approval UI) is not needed on controlled machines.
+    true
 }
 
 const VERSION_LEN: usize = 2;
